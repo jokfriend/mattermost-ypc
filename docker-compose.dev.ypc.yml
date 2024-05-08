@@ -1,0 +1,23 @@
+version: "3.7"
+
+# For deployment on our server with traefik at chat.palcollective.com
+name: chat-mattermost
+services:
+  app:
+    image: mattermost/mattermost-preview
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.mattermost.rule=Host(`chat.palcollective.com`)"
+      - "traefik.http.routers.mattermost_secure.rule=Host(`chat.palcollective.com`)"
+      - "traefik.http.routers.mattermost.entrypoints=web"
+      - "traefik.http.routers.mattermost_secure.entrypoints=websecure"
+      - "traefik.http.routers.mattermost_secure.tls.certresolver=myresolver"
+      - "traefik.http.routers.mattermost.middlewares=mattermost_redirect2https"
+      - "traefik.http.middlewares.mattermost_redirect2https.redirectscheme.scheme=https"
+      - "traefik.docker.network=traefik"
+    networks:
+      - traefik
+
+networks:
+  traefik:
+    external: true
