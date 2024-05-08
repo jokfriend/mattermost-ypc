@@ -7,13 +7,9 @@ services:
     image: mattermost/mattermost-preview
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.mattermost.rule=Host(`chat.palcollective.com`)"
-      - "traefik.http.routers.mattermost_secure.rule=Host(`chat.palcollective.com`)"
-      - "traefik.http.routers.mattermost.entrypoints=web"
-      - "traefik.http.routers.mattermost_secure.entrypoints=websecure"
-      - "traefik.http.routers.mattermost_secure.tls.certresolver=myresolver"
-      - "traefik.http.routers.mattermost.middlewares=mattermost_redirect2https"
-      - "traefik.http.middlewares.mattermost_redirect2https.redirectscheme.scheme=https"
+      - "traefik.http.routers.ant.rule=Host(`chat.palcollective.com`)"
+      - "traefik.http.routers.ant.entrypoints=websecure"
+      - "traefik.http.routers.ant.tls.certresolver=myresolver"
       - "traefik.docker.network=traefik"
     networks:
       - traefik
